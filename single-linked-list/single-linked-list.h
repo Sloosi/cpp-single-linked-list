@@ -82,8 +82,6 @@ class SingleLinkedList {
 
         // Оператор постинкремента
         BasicIterator operator++(int) noexcept {
-            assert(node_ != nullptr);
-
             auto old_value(*this);
             ++(*this);
             return old_value;
@@ -123,14 +121,14 @@ public:
 
     // Конструктор на основе "initializer_list"
     SingleLinkedList(std::initializer_list<Type> values) {
-        ConstructSingleLinkedList(values);
+        ConstructSingleLinkedList(values.begin(), values.end());
     }
 
     // Конструктор копирования
     SingleLinkedList(const SingleLinkedList& other) {
         assert(size_ == 0 && head_.next_node == nullptr);
 
-        ConstructSingleLinkedList(other);
+        ConstructSingleLinkedList(other.begin(), other.end());
     }
 
     // Деструктор класса
@@ -270,12 +268,12 @@ private:
     size_t size_ = 0;
 
     // Вспомогательный конструктор на основе любого "контейнера"
-    template <typename Container>
-    void ConstructSingleLinkedList(const Container& container) {
+    template <typename Iterator>
+    void ConstructSingleLinkedList(const Iterator range_begin, const Iterator& range_end) {
         SingleLinkedList tmp;
         SingleLinkedList reverse_tmp;
         
-        for (auto it = container.begin(); it != container.end(); ++it) {
+        for (auto it = range_begin; it != range_end; ++it) {
             reverse_tmp.PushFront(*it);
         }
         for (auto it = reverse_tmp.begin(); it != reverse_tmp.end(); ++it) {
