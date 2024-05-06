@@ -312,7 +312,7 @@ bool operator<(const SingleLinkedList<Type>& lhs, const SingleLinkedList<Type>& 
 // Сравнивает лексикографически, первый список небольше второго
 template <typename Type>
 bool operator<=(const SingleLinkedList<Type>& lhs, const SingleLinkedList<Type>& rhs) {
-    return (lhs < rhs || lhs == rhs);
+    return !(rhs < lhs);
 }
 
 // Сравнивает лексикографически, первый список больше второго
